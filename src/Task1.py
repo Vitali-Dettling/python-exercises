@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-""" Task 1
+""" Task 1.0
 In 1973, the University of California-Berkeley (UC-Berkeley) was sued for sex discrimination. Its admission data showed that men applying to graduate school at UC-Berkley were more likely to be admitted than women.
 
 The graduate schools had just accepted 44% of male applicants but only 35% of female applicants. The difference was so great that it was unlikely to be due to chance.
@@ -8,58 +8,54 @@ The graduate schools had just accepted 44% of male applicants but only 35% of fe
 By looking at the data more closely, you may realize that there is more to the story than meets the eye.
 """
 
-# External
-import csv
 import urllib.request as down
-import numpy as np
-# python3-tk need to be installed first, in order to install matplotlib, via apt-get install python3-tk
 import matplotlib.pyplot as plt
+import pandas as pd
 
-# Manual
-import src.utility as utility
-
-
+# Download the csv file
 url = 'http://www.calvin.edu/~stob/data/Berkeley.csv'
-
 local_filename, headers = down.urlretrieve(url)
-cr = csv.reader(local_filename)
 
-utility.display_table_csv( local_filename )
+df = pd.DataFrame(pd.read_csv(local_filename))
+print(df) # Show the table of the raw data
 
-sum_male_admitted = 0
-sum_male_rejected = 0
+gender_male = df['Gender'] == 'Male'
+gender_female = df['Gender'] == 'Female'
 
-sum_female_admitted = 0
-sum_female_rejected = 0
+admit_admitted = df['Admit'] == 'Admitted'
+admit_rejected = df['Admit'] == 'Rejected'
 
-with open(local_filename) as csvfile:
-    reader = csv.DictReader(csvfile)
-    for row in reader:
-        if(row['Gender'] == 'Male'):
-            if(row['Admit'] == 'Admitted'):
-                sum_male_admitted = sum_male_admitted + int(row['Freq'])
-            elif(row['Admit'] == 'Rejected'):
-                sum_male_rejected = sum_male_rejected + int(row['Freq'])
-        elif(row['Gender'] == 'Female'):
-            if (row['Admit'] == 'Admitted'):
-                sum_female_admitted = sum_female_admitted + int(row['Freq'])
-            elif (row['Admit'] == 'Rejected'):
-                sum_female_rejected = sum_female_rejected + int(row['Freq'])
+# Sum all male together which are admitted.
+sum_male_admitted = df[gender_male & admit_admitted]['Freq'].sum()
 
+# Sum all male together which are rejected.
+sum_male_rejected = df[gender_male & admit_rejected]['Freq'].sum()
 
-male_result = sum_male_rejected - sum_male_admitted
-femal_result = sum_female_rejected - sum_female_admitted
+# Sum all female which are admitted
+sum_female_admitted = df[gender_female & admit_admitted]['Freq'].sum()
 
-print('\nMale application admitted: ' + str(male_result) + ' \nSum of all male applications:' , (sum_male_rejected + sum_male_admitted))
-print('Female applications admitted: ' + str(femal_result) + ' \nSumm of all female applications: ' , (sum_female_rejected + sum_female_admitted))
+# Sum all female which are rejected
+sum_female_rejected = df[gender_female & admit_rejected]['Freq'].sum()
 
-divided_male = male_result / (sum_male_rejected + sum_male_admitted)
-divided_female = femal_result / (sum_female_rejected + sum_female_admitted)
+# Count all together
+total_male = sum_male_admitted + sum_male_rejected
+total_female = sum_female_admitted + sum_female_rejected
 
-print('\nPercent (%.2f) of male:' % divided_male)
-print('Percent (%.2f) of female: ' % divided_female)
+# To verify the display results.
+percent_male_admitted = (sum_male_admitted / total_male) *100
+percent_male_rejected = (sum_male_rejected / total_male) * 100
+percent_female_admitted = (sum_female_admitted / total_female) *100
+percent_female_rejected = (sum_female_rejected / total_female) *100
 
-""" Conclusion
-According to the data more male application were accepted, but fewer were accually permitted.
-In contrary to the femal applications. Fewer application were accepted but more female student were allowed to enter the university.
-"""
+print(percent_male_admitted)
+print(percent_male_rejected)
+print(percent_female_admitted)
+print(percent_female_rejected)
+
+# plot of results
+# http://pandas.pydata.org/pandas-docs/version/0.18.1/visualization.html
+data = [[sum_male_admitted, sum_female_admitted],[sum_male_rejected, sum_female_rejected]]
+df_plot = pd.DataFrame(data, index=['Admitted', 'Rejected'], columns=['Male', 'Female'])
+df_plot.plot.pie(subplots=True, figsize=(8, 4), autopct='%.0f', fontsize=12, legend=False)
+plt.show()
+
