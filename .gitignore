@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 
 # User Manual Configurations
+.idea/*
 *.sh
 Delete*.py
 Delete/*
