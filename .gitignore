@@ -5,6 +5,7 @@ __pycache__/
 
 # User Manual Configurations
 *.sh
+Delete*.py
 
 # C extensions
 *.so

@@ -13,11 +13,13 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Download the csv file
-url = 'http://www.calvin.edu/~stob/data/Berkeley.csv'
-local_filename, headers = down.urlretrieve(url)
+# url = 'http://www.calvin.edu/~stob/data/Berkeley.csv'
+# local_filename, headers = down.urlretrieve(url)
+# df = pd.DataFrame(pd.read_csv(local_filename))
 
-df = pd.DataFrame(pd.read_csv(local_filename))
-print(df) # Show the table of the raw data
+data = pd.read_csv('../data/Berkeley.csv')
+df = pd.DataFrame(data)
+print(df)
 
 gender_male = df['Gender'] == 'Male'
 gender_female = df['Gender'] == 'Female'
