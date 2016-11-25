@@ -3,8 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Customer ignores
-.idea/*
+# User Manual Configurations
+*.sh
+Delete*.py
+Delete/*
 
 # C extensions
 *.so
