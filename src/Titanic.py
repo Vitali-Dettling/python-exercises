@@ -79,6 +79,8 @@ def custom_heuristic(file_path):
             else:
                 predictions[passenger_id] = 1
 
+    # TODO Display the result in a graph
+
     return predictions
 
 '''
