@@ -17,15 +17,15 @@ def csv_writer_to_data(url, filename):
 def txt_write_to_data(url, filename):
 
     path = '../data/' + filename + '.txt'
-    if(os.path.isfile(path) and os.path.getsize(path) > 0):
+    if(path_exist(path, '.txt')):
         return(path)
 
-
-    # Gets the data from an API and saves the data into a csv file.
-    data = pandas.read_csv(url, header=False, index=False)
-    pandas.DataFrame.to_csv(data, path, header=False, index=False)
+    # Gets the data from an API and saves the data into a txt file.
+    data = pandas.read_csv(url)
+    pandas.DataFrame.to_csv(data, path, header=None, index=None)
 
     return (path)
+
 
 
 def path_exist(path, extension):
