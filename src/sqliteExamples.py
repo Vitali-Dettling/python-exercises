@@ -19,7 +19,7 @@ https://www.tutorialspoint.com/sqlite/sqlite_date_time.htm
 '''
 
 url = 'https://s3.amazonaws.com/content.udacity-data.com/courses/ud359/weather_underground.csv'
-path = util.csv_writer_to_data(url, 'Weather')
+path = util.csv_write_to_data(url, 'Weather')
 weather_data = pandas.read_csv(path)
 
 

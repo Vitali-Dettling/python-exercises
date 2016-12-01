@@ -6,8 +6,6 @@ __pycache__/
 # User Manual Configurations
 .idea/*
 *.sh
-Delete*.py
-Delete/*
 .~lock.*
 
 # C extensions
