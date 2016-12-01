@@ -26,6 +26,15 @@ def txt_write_to_data(url, filename):
 
     return (path)
 
+def txt_print_header(path, nlines):
+    N = nlines
+    count = 0
+    with open(path) as f:
+        for row in f:
+            if (count >= N):
+                break
+            count += 1
+            print(row)
 
 
 def path_exist(path, extension):
@@ -33,5 +42,3 @@ def path_exist(path, extension):
     path_ext = path + extension
     if(os.path.isfile(path_ext) and os.path.getsize(path_ext) > 0):
         return(True)
-
-
