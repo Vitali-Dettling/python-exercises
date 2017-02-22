@@ -17,7 +17,7 @@ import pandas as pd
 # local_filename, headers = down.urlretrieve(url)
 # df = pd.DataFrame(pd.read_csv(local_filename))
 
-data = pd.read_csv('../data/Berkeley.csv')
+data = pd.read_csv('../Statistic/data/Berkeley.csv')
 df = pd.DataFrame(data)
 print(df)
 

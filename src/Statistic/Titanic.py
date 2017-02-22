@@ -87,4 +87,4 @@ def custom_heuristic(file_path):
 Returns a heuristic which is > 80% accurate.
 '''
 
-custom_heuristic('../data/titanic_data.csv')
+custom_heuristic('../Statistic/data/titanic_data.csv')

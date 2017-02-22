@@ -3,7 +3,7 @@ import pandas
 
 def csv_writer_to_data(url, filename):
 
-    path = '../data/' + filename + '.csv'
+    path = '../Statistic/data/' + filename + '.csv'
     if(path_exist(path, '.csv')):
         return(path)
 
@@ -16,7 +16,7 @@ def csv_writer_to_data(url, filename):
 
 def txt_write_to_data(url, filename):
 
-    path = '../data/' + filename + '.txt'
+    path = '../Statistic/data/' + filename + '.txt'
     if(path_exist(path, '.txt')):
         return(path)
 
