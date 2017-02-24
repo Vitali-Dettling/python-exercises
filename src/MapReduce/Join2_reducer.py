@@ -22,27 +22,33 @@ import sys
 #  San Diego Supercomputer Center copyright
 # --------------------------------------------------------------------------
 
+channels = []
+joinedChannels = {}
 sum_to_output = 0
-previouseChannelTV = None
+previousChannel = None
 
-file = open('submit', 'w+')
-with open('out') as f:
+file = open('Data/submit', 'w+')
+with open('Data/out') as f:
     content = f.readlines()
     for line in content:
         line       = line.strip()       #strip out carriage return
         key_value  = line.split('\t')   #split line, into key and value, returns a list
 
-        #note: for simple debugging use print statements, ie:
-        curr_TV  = key_value[0]         #key is first item in list, indexed by 0
+        key_in  = key_value[0]         #key is first item in list, indexed by 0
         value_in   = key_value[1]         #value is 2nd item
 
         # sum all TV channels up
-        if(curr_TV == previouseChannelTV or previouseChannelTV == None):
-            previouseChannelTV = curr_TV
-            sum_to_output = sum_to_output + int(value_in)
-        else:
-            previouseChannelTV = None
-            file.write('%s\t%s\n' % (curr_TV, sum_to_output))
-            sum_to_output = 0
-            #print('%s\t%s' % (curr_TV, value_in))
+        if(value_in == 'ABC'):
+            channels = [key_in]
+
+        if(value_in.isdigit() and key_in in channels):
+            if(previousChannel == key_in):
+                joinedChannels[key_in] = int(joinedChannels[key_in]) + int(value_in)
+            else:
+                previousChannel = key_in
+                joinedChannels[key_in] = value_in
+
+for key, value in joinedChannels.iteritems():
+    file.write('%s\t%s\n' % (key, value))
+
 
